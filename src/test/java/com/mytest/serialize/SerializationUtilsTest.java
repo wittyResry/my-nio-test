@@ -16,15 +16,60 @@
  */
 package com.mytest.serialize;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+import com.mytest.common.utils.KyroSerializationUtils;
 
 /**
  * @author liqingyu
  * @since 2018/12/27
  */
 public class SerializationUtilsTest {
+    private final static Logger LOGGER = LoggerFactory.getLogger(SerializationUtilsTest.class);
+
     @Test
-    public void test() {
+    public void test() throws FileNotFoundException {
         System.out.println("asdf");
+        Kryo kryo = new Kryo();
+        kryo.register(SomeClass.class);
+
+        SomeClass object = new SomeClass();
+        object.value = "Hello Kryo!";
+
+        Output output = new Output(new FileOutputStream("file.bin"));
+        kryo.writeObject(output, object);
+        output.close();
+
+        Input input = new Input(new FileInputStream("file.bin"));
+        SomeClass object2 = kryo.readObject(input, SomeClass.class);
+        input.close();
+    }
+
+    @Test
+    public void test2() {
+        SomeClass object = new SomeClass();
+        object.value = "Hello Kryo!";
+        byte[] bytes = KyroSerializationUtils.writeObject(object, SomeClass.class);
+        System.out.println(new String(bytes));
+        Object object2 = KyroSerializationUtils.readObject(bytes, SomeClass.class);
+        if (object2 instanceof SomeClass) {
+            SomeClass someClass2 = (SomeClass) object2;
+            LOGGER.warn("Y" + someClass2);
+        } else {
+            LOGGER.warn("N");
+        }
+    }
+
+    static public class SomeClass {
+        String value;
     }
 }

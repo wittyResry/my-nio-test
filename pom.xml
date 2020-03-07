@@ -114,6 +114,16 @@
             <artifactId>com.springsource.org.apache.commons.lang</artifactId>
             <version>2.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>de.javakaffee</groupId>
+            <artifactId>kryo-serializers</artifactId>
+            <version>0.37</version>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>

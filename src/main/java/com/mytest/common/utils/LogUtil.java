@@ -49,7 +49,7 @@ public class LogUtil {
         }
         System.out.println(String.format("%s.%s,processing,date:%s",
             Thread.currentThread().getStackTrace()[INDEX].getClassName(),
-            Thread.currentThread().getStackTrace()[INDEX].getMethodName(),
+                Thread.currentThread().getStackTrace()[INDEX].getMethodName(),
             DateUtils.getNewFormatDateString(new Date(System.currentTimeMillis()))));
         sleepOneSecond();
     }
